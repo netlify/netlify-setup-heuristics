@@ -1,0 +1,19 @@
+{
+  "name": "netlify-setup-heuristics",
+  "version": "1.0.0",
+  "description": "Heuristics for configuring CI and sanity checks for setups that most likely won't work",
+  "main": "index.js",
+  "scripts": {
+    "compile": "babel -d lib/ src/",
+    "test": "NODE_ENV=test mocha --recursive --compilers js:babel-register",
+    "test:watch": "npm test -- --watch",
+    "prepublish": "npm run compile"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-register": "^6.7.2",
+    "mocha": "^2.4.5"
+  }
+}
