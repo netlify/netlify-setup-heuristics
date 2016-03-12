@@ -20,6 +20,8 @@ export const files = {
 };
 
 /*
+  Warn if something looks wrong with this continuous deployment setup.
+
   Takes an object of files that were found in the deploy folder and return a
   warning if any.
 
@@ -28,21 +30,115 @@ export const files = {
   read.
 */
 export function warning(files = {}) {
-  for (var i in tests) {
-    var result = tests[i](files);
+  for (var i in warningTests) {
+    var result = warningTests[i](files);
     if (result) {
       return result;
     }
   }
 }
 
-function jekyll(files) {
+/*
+  Try to guess the settings for this continuous deployment setup.
+
+  Takes an object of files that were found in the deploy folder and return a
+  warning if any.
+
+  Depending on the action for the files the value for a file should either be
+  true if the action is a check, or the content of the file if the action was
+  read.
+*/
+export function settings(files = {}) {
+  for (var i in settingsTests) {
+    var result = settingsTests[i](files);
+    if (result) {
+      return result;
+    }
+  }
+}
+
+const gems = {
+  jekyll: {cmd: 'jekyll build', dir: '_site/'},
+  middleman: {cmd: 'middleman build', dir: 'build/'},
+  nanoc: {cmd: 'nanoc', dir: 'output/'}
+};
+
+function gemfileSettings(files) {
+  if (!files['Gemfile']) { return; }
+
+  for (var i in gems) {
+    var regexp = new RegExp(`('${i}'|"${i}")`);
+    if (regexp.test(files['Gemfile'])) {
+      return gems[i];
+    }
+  }
+}
+
+const packages = {
+  brunch: {cmd: "brunch build", dir: "public/"},
+  assemble: {cmd: "grunt build", dir: "dist/"},
+  'ember-cli': {cmd: "ember build -e production", dir: "dist/"},
+  hexo: {cmd: "hexo generate", dir: "public/"},
+  metalsmith: {cmd: "metalsmith", dir: "build/"},
+  roots: {cmd: "roots compile", dir: "public/"},
+  docpad: {cmd: "docpad generate", dir: "out/"},
+  wintersmith: {cmd: "wintersmith build", dir: "build/"},
+  gatsby: {cmd: "gatsby build", dir: "public/"},
+  harp: {cmd: "harp compile", dir: "www/"},
+  grunt: {cmd: "grunt build", dir: "dist/"},
+  gulp: {cmd: "gulp build", dir: "dist/"}
+}
+
+function packageSettings(files) {
+  if (!files['package.json']) { return; }
+  var data, dependencies, devDependencies;
+  try {
+    data = JSON.parse(files['package.json']);
+  } catch(e) {
+    return;
+  }
+
+  if (packages.scripts && packages.scripts.build) {
+    return {cmd: "npm run build", dir: "dist/"};
+  }
+
+  dependencies = data.dependencies || {};
+  devDependencies = data.devDependencies || {};
+
+  for (var i in packages) {
+    if (dependencies[i] || devDependencies[i]) {
+      return packages[i];
+    }
+  }
+}
+
+const requirements = {
+  mkdocs: {cmd: "mkdocs build", dir: "site/"},
+  pelican: {cmd: "pelican content", dir: "output/"},
+  cactus: {cmd: "cactus build", dir: ".build/"}
+};
+
+function requirementsSettings(files) {
+  if (!files['requirements.txt']) { return; }
+
+  for (var i in requirements) {
+    var regexp = new RegExp(`^${i}==`);
+    if (regexp.test(files['requirements.txt'])) {
+      return requirements[i];
+    }
+  }
+}
+
+const settingsTests = [gemfileSettings, requirementsSettings, packageSettings];
+
+
+function jekyllWarnings(files) {
   if (!files['_config.yml']) { return; }
   if (!files['Gemfile']) { return messages['jekyll with no gemfile']; }
   if (!files['Gemfile'].match(/('jekyll'|"jekyll")/)) { return messages['jekyll not in gemfile']; }
 }
 
-function packageJson(files) {
+function packageWarnings(files) {
   var data;
   if (!files['package.json']) { return; }
 
@@ -56,7 +152,7 @@ function packageJson(files) {
   }
 }
 
-const tests = [jekyll, packageJson];
+const warningTests = [jekyllWarnings, packageWarnings];
 
 const messages = {
   'jekyll with no gemfile':
