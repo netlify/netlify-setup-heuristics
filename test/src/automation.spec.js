@@ -60,5 +60,12 @@ describe('automation', () => {
         dir: 'output/'
       });
     });
+
+    it('should guess a cactus setup', () => {
+      expect(settings({'requirements.txt': 'cactus'})).toEqual({
+        cmd: 'cactus build',
+        dir: '.build/'
+      });
+    });
   });
 });

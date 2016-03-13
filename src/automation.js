@@ -16,7 +16,8 @@ export const files = {
   '_config.yml': 'check',
   'Gemfile': 'read',
   'package.json': 'read',
-  'app.coffee': 'check'
+  'app.coffee': 'check',
+  'requirements.txt': 'read'
 };
 
 /*
