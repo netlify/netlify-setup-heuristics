@@ -122,7 +122,7 @@ function requirementsSettings(files) {
   if (!files['requirements.txt']) { return; }
 
   for (var i in requirements) {
-    var regexp = new RegExp(`^${i}==`);
+    var regexp = new RegExp(`^${i}(==)?`);
     if (regexp.test(files['requirements.txt'])) {
       return requirements[i];
     }
