@@ -99,12 +99,16 @@ function packageSettings(files) {
     return;
   }
 
+  dependencies = data.dependencies || {};
+  devDependencies = data.devDependencies || {};
+
+  if (devDependencies["react-scripts"]) {
+    return {cmd: "npm run build", dir: "build/"};
+  }
+
   if (packages.scripts && packages.scripts.build) {
     return {cmd: "npm run build", dir: "dist/"};
   }
-
-  dependencies = data.dependencies || {};
-  devDependencies = data.devDependencies || {};
 
   for (var i in packages) {
     if (dependencies[i] || devDependencies[i]) {
