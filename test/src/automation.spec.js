@@ -67,5 +67,12 @@ describe('automation', () => {
         dir: '.build/'
       });
     });
+
+    it('should pick up settings from netlify.tml file', () => {
+      expect(settings({'netlify.toml': '[build]\ncommand = "npm run build"\npublish = "dist"'})).toEqual({
+        cmd: "npm run build",
+        dir: "dist"
+      });
+    })
   });
 });

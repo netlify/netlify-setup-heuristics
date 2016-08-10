@@ -1,3 +1,5 @@
+import {TOML} from "./vendor/toml";
+
 /*
   Heruistics for continuous deployment setups.
 
@@ -14,6 +16,7 @@
 */
 export const files = {
   '_config.yml': 'check',
+  'netlify.toml': 'read',
   'Gemfile': 'read',
   'package.json': 'read',
   'app.coffee': 'check',
@@ -55,6 +58,15 @@ export function settings(files = {}) {
     if (result) {
       return result;
     }
+  }
+}
+
+function netlifyTomlSettings(files) {
+  if (!files['netlify.toml']) { return; }
+
+  const config = TOML.parse(files['netlify.toml']);
+  if (config && config.build) {
+    return {cmd: config.build.command, dir: config.build.publish}
   }
 }
 
@@ -134,7 +146,7 @@ function requirementsSettings(files) {
   }
 }
 
-const settingsTests = [gemfileSettings, requirementsSettings, packageSettings];
+const settingsTests = [netlifyTomlSettings, gemfileSettings, requirementsSettings, packageSettings];
 
 
 function jekyllWarnings(files) {
