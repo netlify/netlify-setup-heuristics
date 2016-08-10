@@ -344,10 +344,5 @@
     }
   };
 
-  if (typeof window !== "undefined" && window !== null) {
-    window.TOML = TOML;
-  } else {
-    exports.TOML = TOML;
-  }
-
+  exports.TOML = TOML;
 }).call(this);

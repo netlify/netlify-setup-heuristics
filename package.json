@@ -1,6 +1,6 @@
 {
   "name": "netlify-setup-heuristics",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Heuristics for configuring CI and sanity checks for setups that most likely won't work",
   "main": "index.js",
   "scripts": {
