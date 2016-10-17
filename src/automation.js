@@ -65,8 +65,17 @@ function netlifyTomlSettings(files) {
   if (!files['netlify.toml']) { return; }
 
   const config = TOML.parse(files['netlify.toml']);
-  if (config && config.build) {
-    return {cmd: config.build.command, dir: config.build.publish}
+  if (config) {
+    const settings = {};
+    if (config.build) {
+      settings["cmd"] = config.build.command;
+      settings["dir"] = config.build.publish;
+    }
+
+    if (config.template) {
+      settings["template"] = config.template;
+    }
+    return settings;
   }
 }
 
