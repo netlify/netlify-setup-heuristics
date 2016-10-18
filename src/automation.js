@@ -1,4 +1,4 @@
-import {TOML} from "./vendor/toml";
+var TOML = require('toml');
 
 /*
   Heruistics for continuous deployment setups.

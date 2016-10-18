@@ -15,5 +15,8 @@
     "babel-cli": "^6.6.5",
     "babel-register": "^6.7.2",
     "mocha": "^2.4.5"
+  },
+  "dependencies": {
+    "toml": "^2.3.0"
   }
 }
