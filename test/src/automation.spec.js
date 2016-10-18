@@ -74,5 +74,11 @@ describe('automation', () => {
         dir: "dist"
       });
     })
+
+    it('should read template from netlify.tml file', () => {
+      expect(settings({'netlify.toml': '[template]\nincoming-hooks = ["Service-1"]'})).toEqual({
+        template: {"incoming-hooks": ["Service-1"]}
+      });
+    })
   });
 });
