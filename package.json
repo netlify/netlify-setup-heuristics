@@ -1,6 +1,6 @@
 {
   "name": "netlify-setup-heuristics",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Heuristics for configuring CI and sanity checks for setups that most likely won't work",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,8 @@
     "babel-cli": "^6.6.5",
     "babel-register": "^6.7.2",
     "mocha": "^2.4.5"
+  },
+  "dependencies": {
+    "toml": "^2.3.0"
   }
 }
