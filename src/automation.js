@@ -189,7 +189,7 @@ before running your build.`,
 
   'jekyll not in gemfile':
 
-`It looks like this is a **Jekyl** site, but your **Gemfile** doesn't list
+`It looks like this is a **Jekyll** site, but your **Gemfile** doesn't list
 Jekyll as a dependency. Make sure you add **gem "jekyll"** to your Gemfile
 and then run **bundle install**`,
 
