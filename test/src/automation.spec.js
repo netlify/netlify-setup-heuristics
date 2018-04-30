@@ -68,6 +68,13 @@ describe('automation', () => {
       });
     });
 
+    it('should guess a create-react-app setup', () => {
+      expect(settings({'package.json': '{"dependencies": {"react-scripts": "1.1.4"}}'})).toEqual({
+        cmd: 'npm run build',
+        dir: 'build/'
+      });
+    });
+
     it('should pick up settings from netlify.tml file', () => {
       expect(settings({'netlify.toml': '[build]\ncommand = "npm run build"\npublish = "dist"'})).toEqual({
         cmd: "npm run build",

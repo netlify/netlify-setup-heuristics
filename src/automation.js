@@ -123,7 +123,7 @@ function packageSettings(files) {
   dependencies = data.dependencies || {};
   devDependencies = data.devDependencies || {};
 
-  if (devDependencies["react-scripts"]) {
+  if (devDependencies["react-scripts"] || dependencies["react-scripts"]) {
     return {cmd: "npm run build", dir: "build/"};
   }
 
