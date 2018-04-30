@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.6.5",
+    "babel-preset-env": "^1.6.1",
     "babel-register": "^6.7.2",
     "mocha": "^2.4.5"
   },
