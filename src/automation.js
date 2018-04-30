@@ -20,7 +20,8 @@ export const files = {
   'Gemfile': 'read',
   'package.json': 'read',
   'app.coffee': 'check',
-  'requirements.txt': 'read'
+  'requirements.txt': 'read',
+  'yarn.lock': 'check'
 };
 
 /*
@@ -120,15 +121,17 @@ function packageSettings(files) {
     return;
   }
 
+  var runCommand = files['yarn.lock'] ? 'yarn' : 'npm run';
+
   dependencies = data.dependencies || {};
   devDependencies = data.devDependencies || {};
 
   if (devDependencies["react-scripts"] || dependencies["react-scripts"]) {
-    return {cmd: "npm run build", dir: "build/"};
+    return {cmd: `${runCommand} build`, dir: "build/"};
   }
 
   if (packages.scripts && packages.scripts.build) {
-    return {cmd: "npm run build", dir: "dist/"};
+    return {cmd: `${runCommand} build`, dir: "dist/"};
   }
 
   for (var i in packages) {
