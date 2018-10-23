@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import expect from 'expect';
 import { warning } from '../../src/deploy';
 

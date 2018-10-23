@@ -5,17 +5,26 @@
   "main": "index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
-    "test": "yarn jest",
+    "test": "yarn jest && yarn run lint",
     "test:watch": "npm test -- --watch",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile",
+    "format": "eslint . --fix && prettier --write 'src/**/*.js'",
+    "prettier-preview": "prettier --list-different 'src/**/*.js'",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.6.5",
     "babel-preset-env": "^1.6.1",
+    "babel-eslint": "^8.2.1",
     "babel-register": "^6.7.2",
-    "jest": "^22.4.3"
+    "jest": "^22.4.3",
+    "eslint": "^4.15.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.1.2",
+    "prettier": "^1.10.1"
   },
   "dependencies": {
     "toml": "^2.3.0"
